@@ -1,0 +1,65 @@
+2019-03-28 13:54:32.704 JST [20188] LOG:  could not bind IPv6 address "::1": Address already in use
+2019-03-28 13:54:32.704 JST [20188] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2019-03-28 13:54:32.704 JST [20188] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-03-28 13:54:32.705 JST [20188] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-03-28 13:54:32.714 JST [20189] LOG:  database system was shut down at 2019-03-28 13:54:13 JST
+2019-03-28 13:54:32.717 JST [20188] LOG:  database system is ready to accept connections
+2019-03-28 13:54:45.970 JST [20233] FATAL:  role "postgres" does not exist
+2019-03-28 14:03:02.712 JST [20412] ERROR:  syntax error at or near "id" at character 22
+2019-03-28 14:03:02.712 JST [20412] STATEMENT:  create table works  
+	id integer not null,
+	ordinal integer not null,
+	author text not null,
+	title text not null,
+	summary_total_count integer not null,
+	summary_is_elected boolean not null,
+	summary_self_ev text not null,
+	body_total_count integer not null,
+	body_new_line_count integer not null,
+	body_scat_count integer not null,
+	body_ruby_count integer not null,
+	body_score integer not null, primary key(id));
+2019-03-28 14:04:24.579 JST [20412] ERROR:  syntax error at or near ";" at character 16
+2019-03-28 14:04:24.579 JST [20412] STATEMENT:  select works *
+	;
+2019-03-28 17:01:47.002 JST [51396] ERROR:  syntax error at or near "\" at character 1
+2019-03-28 17:01:47.002 JST [51396] STATEMENT:  \d
+2019-03-28 17:01:55.891 JST [51396] ERROR:  syntax error at or near "/" at character 1
+2019-03-28 17:01:55.891 JST [51396] STATEMENT:  /d
+2019-03-28 17:03:55.015 JST [48391] ERROR:  syntax error at or near "-" at character 18
+2019-03-28 17:03:55.015 JST [48391] STATEMENT:  alter database sf-db owner to postgres;
+2019-03-28 17:04:03.639 JST [48391] ERROR:  syntax error at or near "'sf-db'" at character 16
+2019-03-28 17:04:03.639 JST [48391] STATEMENT:  alter database 'sf-db' owner to postgres;
+2019-03-28 17:14:30.936 JST [53609] ERROR:  syntax error at or near "works" at character 6
+2019-03-28 17:14:30.936 JST [53609] STATEMENT:  drop works
+	;
+2019-03-28 17:14:35.451 JST [53609] ERROR:  relation "works" does not exist at character 15
+2019-03-28 17:14:35.451 JST [53609] STATEMENT:  select * from works;
+2019-03-28 17:22:15.322 JST [54923] ERROR:  relation "pg_cass" does not exist at character 21
+2019-03-28 17:22:15.322 JST [54923] STATEMENT:  select relname from pg_cass where relname='works';
+2019-03-28 17:25:26.166 JST [55521] FATAL:  database "template0" is not currently accepting connections
+2019-03-28 17:28:56.889 JST [20188] LOG:  received fast shutdown request
+2019-03-28 17:28:56.890 JST [20188] LOG:  aborting any active transactions
+2019-03-28 17:28:56.891 JST [20188] LOG:  background worker "logical replication launcher" (PID 20195) exited with exit code 1
+2019-03-28 17:28:56.892 JST [20190] LOG:  shutting down
+2019-03-28 17:28:56.903 JST [20188] LOG:  database system is shut down
+2019-03-28 17:28:57.016 JST [56071] LOG:  could not bind IPv6 address "::1": Address already in use
+2019-03-28 17:28:57.016 JST [56071] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2019-03-28 17:28:57.016 JST [56071] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-03-28 17:28:57.017 JST [56071] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-03-28 17:28:57.028 JST [56072] LOG:  database system was shut down at 2019-03-28 17:28:56 JST
+2019-03-28 17:28:57.032 JST [56071] LOG:  database system is ready to accept connections
+2019-03-28 17:38:24.972 JST [56071] LOG:  received fast shutdown request
+2019-03-28 17:38:24.973 JST [56071] LOG:  aborting any active transactions
+2019-03-28 17:38:24.973 JST [56071] LOG:  background worker "logical replication launcher" (PID 56078) exited with exit code 1
+2019-03-28 17:38:24.974 JST [56073] LOG:  shutting down
+2019-03-28 17:38:24.980 JST [56071] LOG:  database system is shut down
+2019-03-28 17:38:25.095 JST [57714] LOG:  could not bind IPv6 address "::1": Address already in use
+2019-03-28 17:38:25.095 JST [57714] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2019-03-28 17:38:25.095 JST [57714] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-03-28 17:38:25.096 JST [57714] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-03-28 17:38:25.106 JST [57715] LOG:  database system was shut down at 2019-03-28 17:38:24 JST
+2019-03-28 17:38:25.110 JST [57714] LOG:  database system is ready to accept connections
+2019-03-28 17:39:24.125 JST [57850] ERROR:  syntax error at or near "-" at character 17
+2019-03-28 17:39:24.125 JST [57850] STATEMENT:  drop database sf-db
+	;
