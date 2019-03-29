@@ -9,42 +9,44 @@ import score_ev
 import count_ev
 
 if __name__ == "__main__":
-    if (sys.argv[1] == "-c") :
+    evdiff = ev_diff.Evdiff()
+    scorev = score_ev.ScoreEv()
+    countev = count_ev.CountEv()
+
+    if (sys.argv[1] == "-c"):
         works = worksinfo.WorksInfo(False)
         works.scraping()
-    elif (sys.argv[1] == "-cu") :
+    elif (sys.argv[1] == "-cu"):
         works = worksinfo.WorksInfo(True)
         works.scraping()
     elif(sys.argv[1] == "-self_ev"):
         selfinfo = selfevinfo.Selfevinfo()
         selfinfo.scraping()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'ordinal_ev') :
-        evdiff = ev_diff.Evdiff()
+    elif (sys.argv[1] == '-ad' and sys.argv[2] == 'ordinal_ev'):
         evdiff.analysis_scatter_ordinal_and_ev()
+    elif (sys.argv[1] == '-ad' and sys.argv[2] == 'auth_ev'):
         evdiff.analysis_scatter_ordinal_and_author()
-        evdiff.show_plt()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'auth_ev') :
-        evdiff = ev_diff.Evdiff()
-        evdiff.analysis_scatter_ordinal_and_author()
-        evdiff.show_plt()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'score_bodycount'):
-        scorev = score_ev.ScoreEv()
+    elif (sys.argv[1] == '-ad' and sys.argv[2] == 'ev_count'):
+        evdiff.analysis_ev_and_score()
+    elif (sys.argv[1] == '-as' and sys.argv[2] == 'score_bodycount'):
         scorev.analysis_score_bodycount()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'score_newline_rate'):
-        scorev = score_ev.ScoreEv()
+    elif (sys.argv[1] == '-as' and sys.argv[2] == 'score_newline_rate'):
         scorev.analysis_score_newline_rate()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'score_ruby_rate'):
-        scorev = score_ev.ScoreEv()
+    elif (sys.argv[1] == '-as' and sys.argv[2] == 'score_ruby_rate'):
         scorev.analysis_score_ruby_rate()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'score_scat_rate'):
-        scorev = score_ev.ScoreEv()
+    elif (sys.argv[1] == '-as' and sys.argv[2] == 'score_scat_rate'):
         scorev.analysis_score_scat_rate()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'score_count_rate'):
-        scorev = score_ev.ScoreEv()
+    elif (sys.argv[1] == '-as' and sys.argv[2] == 'score_count_rate'):
         scorev.analysis_score_count_rate()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'score_summary_count'):
-        scorev = score_ev.ScoreEv()
+    elif (sys.argv[1] == '-as' and sys.argv[2] == 'score_summary_count'):
         scorev.analysis_score_summary_count()
-    elif (sys.argv[1] == '-a' and sys.argv[2] == 'count') :
-        countev = count_ev.CountEv()
+    elif (sys.argv[1] == '-ac' and sys.argv[2] == 'count'):
         countev.analysis_body_summary()
+    elif (sys.argv[1] == '-cluster' and sys.argv[2] == 'newline'):
+        countev.clustering_body_score()
+    elif (sys.argv[1] == '-cluster' and sys.argv[2] == 'scat'):
+        countev.clustering_scat_score()
+    elif (sys.argv[1] == '-cluster' and sys.argv[2] == 'ruby'):
+        countev.clustering_ruby_score()
+    elif (sys.argv[1] == '-cluster' and sys.argv[2] == 'score_newline'):
+        scorev.cluster_newline()

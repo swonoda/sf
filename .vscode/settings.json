@@ -1,11 +1,7 @@
 {
-<<<<<<< HEAD
     "editor.wordWrapColumn": 300,
     "python.formatting.autopep8Args": [
         "--max-line-length",
         "120",
     ]
-=======
-    "python.pythonPath": "C:\\Users\\SayoO\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe"
->>>>>>> fa7ee1cc1ee93e17fb209d55c05c8af42bb87210
 }

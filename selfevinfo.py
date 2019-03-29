@@ -25,10 +25,12 @@ class Selfevinfo:
                 continue
             title = raw[1].get_text()
             ev = raw[3].get_text()
-            if ev == '高' :
-                ev = '大'
-            if ev == '低' :
-                ev = '小'
+            if ev == '高' or ev == '大':
+                ev = 'High'
+            if ev == '低' or ev == '小':
+                ev = 'Low'
+            if ev == '中':
+                ev = 'Middle'
 
             self.pg_ctrl.update_selfdata(ev, self.ordinal, title, user)
             # self.work_list.append(info)
