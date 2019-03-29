@@ -22,17 +22,18 @@ class WorksInfo:
         self.wd.work_title = work_body.find("h1", attrs={"class", "work-title"}).get_text()
         entry = work_body.find("section", attrs={"id", "work-entry"})
         content = work_body.find("div", attrs={"class", "work-content"})
-        print(content)
-        self.wd.body_newline = len(content.find_all("p")) + len(content.find_all("br"))
-        self.wd.body_ruby = len(content.find_all("ruby"))
-        self.wd.body_scat = work_body.get_text().count("「")
-        print(self.wd.body_scat)
         body_count_str = work_body.find_all("p", attrs={"class", "count-character"})
         print(body_count_str)
         if(len(body_count_str) > 2):
             str = body_count_str[2].get_text().replace('\t', '')
             self.wd.body_total_count = int(str[str.find("：")+1:])
             print(self.wd.body_total_count)
+
+        if len(content.get_text()) < self.wd.body_total_count:
+            content = work_body
+        self.wd.body_newline = len(content.find_all("p")) + len(content.find_all("br"))
+        self.wd.body_ruby = len(content.find_all("ruby"))
+        self.wd.body_scat = content.get_text().count("「")
 
     def works_scraping(self, url):
         resp = requests.get(url)
@@ -84,7 +85,7 @@ class WorksInfo:
                 self.students_scraping(list_items)
 
     def update(self):
-        sql = "select ordinal, author, summary_title, summary_total_count, body_title, work_url from works where (body_title <> '' and body_total_count < 5000) or (body_score > 1 and body_total_count < 5000) or (body_total_count > 10000 and body_scat_count < 1)"
+        sql = "select ordinal, author, summary_title, summary_total_count, body_title, work_url from works where (body_title <> '' and body_total_count < 5000) or (body_score > 1 and body_total_count < 5000)"
         result = self.pg_ctrl.select(sql)
         print(result)
         for update_work in result:
