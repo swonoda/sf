@@ -22,20 +22,11 @@ class ScoreEv:
 
     def analysis_score(self, target, title):
         connection = psycopg2.connect(**self.connection_config)
-<<<<<<< HEAD
-        if target == 'body_total_count' :
-            count_sql = "select body_title, body_score, body_total_count, author from works where body_score > 0 and body_total_count > 0 order by body_score"
-        else :
-            count_sql = "select body_title, body_score, " + target + \
-                ", body_total_count, author from works where body_score > 0 and body_total_count > 0 order by body_score"
-
-=======
         if target == 'body_total_count':
             count_sql = "select body_title, body_score, body_total_count, author from works where body_score > 0 and body_score < 20 and body_total_count > 0 and body_total_count < 40000 order by body_score"
         else:
             count_sql = "select body_title, body_score, " + target + \
                 ", body_total_count, author from works where body_score > 0 and body_total_count > 0 and body_score < 20 and body_total_count < 40000 order by body_score"
->>>>>>> 7e0267432014df43ee5deb469bbbe7d0a0287a78
         score_count = pd.read_sql(sql=count_sql, con=connection, index_col='body_title')
         if(target != 'body_total_count'):
             rate = score_count[target]/score_count.body_total_count * 100
