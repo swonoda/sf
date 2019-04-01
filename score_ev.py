@@ -22,8 +22,11 @@ class ScoreEv:
 
     def analysis_score(self, target, title):
         connection = psycopg2.connect(**self.connection_config)
-        count_sql = "select body_title, body_score, " + target + \
-            ", body_total_count, author from works where body_score > 0 and body_total_count > 0 order by body_score"
+        if target == 'body_total_count':
+            count_sql = "select body_title, body_score, body_total_count, author from works where body_score > 0 and body_score < 20 and body_total_count > 0 and body_total_count < 40000 order by body_score"
+        else:
+            count_sql = "select body_title, body_score, " + target + \
+                ", body_total_count, author from works where body_score > 0 and body_total_count > 0 and body_score < 20 and body_total_count < 40000 order by body_score"
         score_count = pd.read_sql(sql=count_sql, con=connection, index_col='body_title')
         if(target != 'body_total_count'):
             rate = score_count[target]/score_count.body_total_count * 100
@@ -43,6 +46,7 @@ class ScoreEv:
             x_target = target
         else:
             x_target = 'rate'
+        score_count = score_count.sort_values('body_score', ascending=False)
         ax = sns.lmplot(x=x_target, y='body_score', hue='author', data=score_count, fit_reg=False)
         ax = plt.gca()
         ax.set_title(title)
