@@ -41,25 +41,29 @@ class CountEv:
         plt.show()
 
     def clustering(self, cluster_target, n_cluster, title):
+        print(title)
         connection = psycopg2.connect(**self.connection_config)
-        count_sql = "select body_title, body_score, summary_total_count, body_total_count" + "," + cluster_target + \
+        count_sql = "select body_title, body_score, body_total_count" + "," + cluster_target + \
             ", author from works where body_total_count > 0 and body_total_count < 40000"
         score_count = pd.read_sql(sql=count_sql, con=connection, index_col='body_title')
         rate = score_count[cluster_target]/score_count.body_total_count * 100
-
+        print(rate)
         label_rate = cluster_target + "_rate"
         score_count[label_rate] = rate
-        print(score_count)
 
         model1 = KMeans(n_clusters=n_cluster, random_state=0)
         data = score_count[[label_rate]]
         cluster_mean = model1.fit(data)
         cluster = cluster_mean.labels_
         score_count['cluster'] = cluster
-        print(cluster_mean)
+        score_count = score_count.sort_values(label_rate, ascending=True)
+        print(score_count)
+        score_count.to_csv("data/" + cluster_target + ".csv")
+
         scatter_table = pd.pivot_table(score_count, index='author', columns='cluster',
                                        aggfunc=len, fill_value=0)
         print(scatter_table[label_rate])
+        scatter_table[label_rate].to_csv("data/" + cluster_target + "_pivot.csv")
 
         fig = plt.figure()
         ax = fig.add_subplot(1, 1, 1)
@@ -70,14 +74,24 @@ class CountEv:
                         data=score_count, fit_reg=False)
         ax = plt.gca()
         ax.set_title(title)
+        plt.savefig("data/" + cluster_target + "_score.png",dpi=300) 
+        plt.clf()
+        ax2 = fig.add_subplot(1, 2, 1)
+        ax2 = sns.lmplot(x = 'body_total_count', y=cluster_target, hue='cluster', data=score_count, fit_reg=False)
+        plt.savefig("data/" + cluster_target + ".png",dpi=300) 
         print(mpl.matplotlib_fname())
         plt.show()
+        fig.show()
 
-    def clustering_body_score(self):
-        self.clustering('body_new_line_count', 2, 'total count vs score by cluster new line rate')
+    def clustering_body_score(self, num_cluster):
+        print("body_new_line_count")
+        self.clustering('body_new_line_count', int(num_cluster), 'total count vs score by cluster new line rate')
 
-    def clustering_scat_score(self):
-        self.clustering('body_scat_count', 2, 'total count vs score by clustering scat rate')
+    def clustering_scat_score(self, num_cluster):
+        self.clustering('body_scat_count', int(num_cluster), 'total count vs score by clustering scat rate')
 
-    def clustering_ruby_score(self):
-        self.clustering('body_ruby_count', 2, 'total count vs score by clustering ruby rate')
+    def clustering_ruby_score(self, num_cluster):
+        self.clustering('body_ruby_count', int(num_cluster), 'total count vs score by clustering ruby rate')
+
+    def clustering_count_score(self, num_cluster):
+        self.clustering('summary_total_count', int(num_cluster), 'total count vs score by clustering summary length')

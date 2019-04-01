@@ -22,8 +22,12 @@ class ScoreEv:
 
     def analysis_score(self, target, title):
         connection = psycopg2.connect(**self.connection_config)
-        count_sql = "select body_title, body_score, " + target + \
-            ", body_total_count, author from works where body_score > 0 and body_total_count > 0 order by body_score"
+        if target == 'body_total_count' :
+            count_sql = "select body_title, body_score, body_total_count, author from works where body_score > 0 and body_total_count > 0 order by body_score"
+        else :
+            count_sql = "select body_title, body_score, " + target + \
+                ", body_total_count, author from works where body_score > 0 and body_total_count > 0 order by body_score"
+
         score_count = pd.read_sql(sql=count_sql, con=connection, index_col='body_title')
         if(target != 'body_total_count'):
             rate = score_count[target]/score_count.body_total_count * 100
@@ -66,9 +70,12 @@ class ScoreEv:
 
     def analysis_score_summary_count(self):
         connection = psycopg2.connect(**self.connection_config)
-        count_sql = "select body_title, body_score, summary_total_count, author from works where body_score > 0 and body_total_count > 0 and summary_total_count > 100 order by body_score"
+        count_sql = "select body_title, author, body_score, summary_total_count, body_total_count from works where body_score > 0 and body_total_count > 0 and summary_total_count > 100 order by body_score"
         score_count = pd.read_sql(sql=count_sql, con=connection, index_col='body_title')
+        score_count = score_count.sort_values('body_score', ascending=False)
         print(score_count)
+
+        score_count.to_csv("data/score_summry.csv")
         print(len(score_count.author))
         fig = plt.figure()
         ax = fig.add_subplot(1, 1, 1)
@@ -88,6 +95,7 @@ class ScoreEv:
             ",author from works where body_total_count > 0 and body_total_count < 40000"
         score_count = pd.read_sql(sql=count_sql, con=connection, index_col='body_title')
         rate = score_count[target]/score_count.body_total_count * 100
+        score_count['rate'] = rate
 
         model1 = KMeans(n_clusters=n_cluster, random_state=0)
         data = score_count[['body_score']]

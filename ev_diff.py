@@ -8,6 +8,8 @@ import seaborn as sns
 
 class Evdiff:
     plt.style.use('ggplot')
+    font = {"family":"IPAexGothic"}
+    plt.rc('font', **font)
     connection_config = {
         'host': 'localhost',
         'port': '5432',
@@ -57,6 +59,7 @@ class Evdiff:
         plt.plot(middle_ev['count'], 'o', label='middle', alpha=0.5, markersize=10)
         plt.plot(low_ev['count'], 'o', label='low', alpha=0.5, markersize=5)
         plt.legend()
+        plt.xticks(rotation=90)
         plt.show()
 
     def analysis_ev_and_score(self):
